@@ -22,6 +22,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const FormSchema = z.object({
+  name: z.string().min(2, {
+    message: "Name must be at least 2 characters.",
+  }),
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
@@ -35,6 +38,7 @@ export default function RegisterDialog() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
+      name: "",
       username: "",
       email: "",
       password: "",
@@ -61,6 +65,19 @@ export default function RegisterDialog() {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-6"
               >
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={form.control}
                   name="username"
