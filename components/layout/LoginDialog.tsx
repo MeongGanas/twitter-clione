@@ -22,6 +22,9 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Email is not valid." }),
@@ -31,6 +34,8 @@ const FormSchema = z.object({
 });
 
 export default function LoginDialog() {
+  const [loading, setLoading] = useState<boolean>(false);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -39,9 +44,20 @@ export default function LoginDialog() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
-  }
+  const onSubmit = (data: z.infer<typeof FormSchema>) => {
+    setLoading(true);
+    try {
+      signIn("credentials", {
+        email: data.email,
+        password: data.password,
+      });
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Dialog>
@@ -70,6 +86,7 @@ export default function LoginDialog() {
                           type="email"
                           placeholder="your@email.com"
                           {...field}
+                          disabled={loading}
                         />
                       </FormControl>
                       <FormMessage />
@@ -86,6 +103,7 @@ export default function LoginDialog() {
                         <Input
                           type="password"
                           placeholder="Password"
+                          disabled={loading}
                           {...field}
                         />
                       </FormControl>
@@ -93,7 +111,11 @@ export default function LoginDialog() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full font-semibold">
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full font-semibold"
+                >
                   Login
                 </Button>
                 <p className="flex justify-center gap-1">

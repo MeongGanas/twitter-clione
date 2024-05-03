@@ -5,8 +5,12 @@ import SidebarLogo from "@/components/layout/SidebarLogo";
 import SidebarItem from "@/components/layout/SidebarItem";
 import SidebarTweetButton from "@/components/layout/SidebarTweetButton";
 import LoginDialog from "./LoginDialog";
+import { signOut, useSession } from "next-auth/react";
+import { BiLogOut } from "react-icons/bi";
 
 export default function Sidebar() {
+  const user = useSession();
+
   const items = [
     {
       label: "Home",
@@ -39,7 +43,11 @@ export default function Sidebar() {
             />
           ))}
 
-          <LoginDialog />
+          {!user.data && <LoginDialog />}
+
+          {user.data && (
+            <SidebarItem label={"Logout"} icon={BiLogOut} onClick={signOut} />
+          )}
 
           <SidebarTweetButton />
         </div>

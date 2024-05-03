@@ -20,6 +20,11 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { User } from "@prisma/client";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -35,6 +40,8 @@ const FormSchema = z.object({
 });
 
 export default function RegisterDialog() {
+  const [loading, setLoading] = useState<boolean>(false);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -45,9 +52,25 @@ export default function RegisterDialog() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
-  }
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    setLoading(true);
+
+    try {
+      await axios.post("/api/register", data);
+
+      toast.success("Account Created");
+
+      signIn("credentials", {
+        email: data.email,
+        password: data.password,
+      });
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Dialog>
@@ -72,7 +95,11 @@ export default function RegisterDialog() {
                     <FormItem>
                       <FormLabel>Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Name" {...field} />
+                        <Input
+                          placeholder="Name"
+                          {...field}
+                          disabled={loading}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -85,7 +112,11 @@ export default function RegisterDialog() {
                     <FormItem>
                       <FormLabel>Username</FormLabel>
                       <FormControl>
-                        <Input placeholder="Username" {...field} />
+                        <Input
+                          placeholder="Username"
+                          {...field}
+                          disabled={loading}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -102,6 +133,7 @@ export default function RegisterDialog() {
                           type="email"
                           placeholder="your@email.com"
                           {...field}
+                          disabled={loading}
                         />
                       </FormControl>
                       <FormMessage />
@@ -119,14 +151,19 @@ export default function RegisterDialog() {
                           type="password"
                           placeholder="Password"
                           {...field}
+                          disabled={loading}
                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full font-semibold">
-                  Login
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full font-semibold"
+                >
+                  Register
                 </Button>
                 <p className="flex justify-center gap-1">
                   Already have account?
