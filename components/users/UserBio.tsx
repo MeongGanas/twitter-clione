@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { format } from "date-fns";
 import { Button } from "../ui/button";
 import { BiCalendar } from "react-icons/bi";
+import EditDialog from "./EditDialog";
 
 export default function UserBio({ userId }: { userId: string }) {
   const { data: currentUser } = useCurrentUser();
@@ -20,9 +21,7 @@ export default function UserBio({ userId }: { userId: string }) {
     <div className="border-b border-b-neutral-800 pb-4">
       <div className="flex justify-end p-2">
         {currentUser?.id === userId ? (
-          <Button className="rounded-full w-20" onClick={() => {}}>
-            Edit
-          </Button>
+          <EditDialog />
         ) : (
           <Button className="rounded-full w-20" onClick={() => {}}>
             Follow

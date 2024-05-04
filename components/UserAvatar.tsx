@@ -36,9 +36,15 @@ export default function UserAvatar({
       }`}
       onClick={onClick}
     >
-      <AvatarImage src={fetchedUser?.profileImage} />
+      <AvatarImage className="rounded-full" src={fetchedUser?.profileImage} />
       <AvatarFallback>
-        <Image fill src={"/images/placeholder.jpg"} alt="Avatar" />
+        <Image
+          fill
+          src={"/images/placeholder.jpg"}
+          sizes="auto"
+          priority
+          alt="Avatar"
+        />
       </AvatarFallback>
     </Avatar>
   );
