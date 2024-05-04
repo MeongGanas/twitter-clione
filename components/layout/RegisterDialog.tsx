@@ -22,7 +22,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { signIn } from "next-auth/react";
 import { User } from "@prisma/client";
 
@@ -52,7 +52,7 @@ export default function RegisterDialog() {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+  const onSubmit = useCallback(async (data: z.infer<typeof FormSchema>) => {
     setLoading(true);
 
     try {
@@ -70,7 +70,7 @@ export default function RegisterDialog() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   return (
     <Dialog>
@@ -86,7 +86,7 @@ export default function RegisterDialog() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6"
+                className="space-y-6 text-left"
               >
                 <FormField
                   control={form.control}

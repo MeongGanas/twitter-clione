@@ -24,7 +24,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Email is not valid." }),
@@ -44,7 +44,7 @@ export default function LoginDialog() {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {
+  const onSubmit = useCallback((data: z.infer<typeof FormSchema>) => {
     setLoading(true);
     try {
       signIn("credentials", {
@@ -57,7 +57,7 @@ export default function LoginDialog() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   return (
     <Dialog>
@@ -73,7 +73,7 @@ export default function LoginDialog() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6"
+                className="space-y-6 text-left"
               >
                 <FormField
                   control={form.control}

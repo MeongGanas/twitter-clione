@@ -5,11 +5,12 @@ import SidebarLogo from "@/components/layout/SidebarLogo";
 import SidebarItem from "@/components/layout/SidebarItem";
 import SidebarTweetButton from "@/components/layout/SidebarTweetButton";
 import LoginDialog from "./LoginDialog";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { BiLogOut } from "react-icons/bi";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 export default function Sidebar() {
-  const user = useSession();
+  const { data: user } = useCurrentUser();
 
   const items = [
     {
@@ -43,13 +44,14 @@ export default function Sidebar() {
             />
           ))}
 
-          {!user.data && <LoginDialog />}
+          {!user && <LoginDialog />}
 
-          {user.data && (
-            <SidebarItem label={"Logout"} icon={BiLogOut} onClick={signOut} />
+          {user && (
+            <>
+              <SidebarItem label={"Logout"} icon={BiLogOut} onClick={signOut} />
+              <SidebarTweetButton />
+            </>
           )}
-
-          <SidebarTweetButton />
         </div>
       </div>
     </div>
