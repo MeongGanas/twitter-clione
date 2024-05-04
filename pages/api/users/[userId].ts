@@ -22,7 +22,7 @@ export default async function handler(
 
     const followersCount = await db.user.count({
       where: {
-        followinIds: {
+        followingIds: {
           has: userId,
         },
       },

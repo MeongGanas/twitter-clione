@@ -44,7 +44,7 @@ export default function UserBio({ userId }: { userId: string }) {
           </div>
         </div>
       </div>
-      <div className="flex flex-row items-center mt-4 gap-6">
+      <div className="flex flex-row items-center mt-4 gap-6 px-4">
         <div className="flex flex-row items-center gap-1">
           <p>{fetchedUser?.followingIds?.length}</p>
           <p className="text-neutral-500">Following</p>
