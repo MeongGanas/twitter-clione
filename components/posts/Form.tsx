@@ -15,7 +15,7 @@ interface PostFormProps {
   postId?: string;
 }
 
-export default function PostForm({
+export default function Form({
   placeholder,
   isComment,
   postId,

@@ -5,10 +5,14 @@ import { format } from "date-fns";
 import { Button } from "../ui/button";
 import { BiCalendar } from "react-icons/bi";
 import EditDialog from "./EditDialog";
+import useFollow from "@/hooks/useFollow";
+import LoginDialog from "../layout/LoginDialog";
 
 export default function UserBio({ userId }: { userId: string }) {
   const { data: currentUser } = useCurrentUser();
   const { data: fetchedUser } = useUser(userId);
+
+  const { isFollowing, toggleFollow } = useFollow(userId);
 
   const createdAt = useMemo(() => {
     if (!fetchedUser?.createdAt) {
@@ -23,9 +27,17 @@ export default function UserBio({ userId }: { userId: string }) {
         {currentUser?.id === userId ? (
           <EditDialog />
         ) : (
-          <Button className="rounded-full w-20" onClick={() => {}}>
-            Follow
-          </Button>
+          <>
+            {!currentUser ? (
+              <LoginDialog>
+                <Button className="rounded-full w-20">Follow</Button>
+              </LoginDialog>
+            ) : (
+              <Button className="rounded-full w-20" onClick={toggleFollow}>
+                {isFollowing ? "Unfollow" : "Follow"}
+              </Button>
+            )}
+          </>
         )}
       </div>
       <div className="mt-4 px-4">
