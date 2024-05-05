@@ -1,4 +1,3 @@
-"use client";
 import { BsBellFill, BsHouseFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import SidebarLogo from "@/components/layout/SidebarLogo";
@@ -6,7 +5,7 @@ import SidebarItem from "@/components/layout/SidebarItem";
 import SidebarTweetButton from "@/components/layout/SidebarTweetButton";
 import LoginDialog from "./LoginDialog";
 import { signOut } from "next-auth/react";
-import { BiLogOut } from "react-icons/bi";
+import { BiLogIn, BiLogOut } from "react-icons/bi";
 import useCurrentUser from "@/hooks/useCurrentUser";
 
 export default function Sidebar() {
@@ -25,7 +24,7 @@ export default function Sidebar() {
     },
     {
       label: "Profile",
-      href: "/user/123",
+      href: user ? `/users/${user.id}` : "",
       icon: FaUser,
     },
   ];
@@ -44,7 +43,11 @@ export default function Sidebar() {
             />
           ))}
 
-          {!user && <LoginDialog />}
+          {!user && (
+            <LoginDialog isFull>
+              <SidebarItem onClick={() => {}} icon={BiLogIn} label="Login" />
+            </LoginDialog>
+          )}
 
           {user && (
             <>

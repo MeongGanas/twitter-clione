@@ -33,7 +33,13 @@ const FormSchema = z.object({
   }),
 });
 
-export default function LoginDialog() {
+export default function LoginDialog({
+  children,
+  isFull,
+}: {
+  children: React.ReactNode;
+  isFull?: boolean;
+}) {
   const [loading, setLoading] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -61,8 +67,8 @@ export default function LoginDialog() {
 
   return (
     <Dialog>
-      <DialogTrigger className="w-full">
-        <SidebarItem onClick={() => {}} icon={BiLogIn} label="Login" />
+      <DialogTrigger className={`${isFull ? "w-full" : "w-fit"}`}>
+        {children}
       </DialogTrigger>
       <DialogContent className="bg-black">
         <DialogHeader className="space-y-5">
@@ -119,7 +125,12 @@ export default function LoginDialog() {
                   Login
                 </Button>
                 <p className="flex justify-center gap-1">
-                  Not have account? <RegisterDialog />
+                  Not have account?
+                  <RegisterDialog>
+                    <span className="text-blue-500 cursor-pointer">
+                      register here
+                    </span>
+                  </RegisterDialog>
                 </p>
               </form>
             </Form>

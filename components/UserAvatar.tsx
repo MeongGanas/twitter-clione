@@ -36,7 +36,10 @@ export default function UserAvatar({
       }`}
       onClick={onClick}
     >
-      <AvatarImage className="rounded-full" src={fetchedUser?.profileImage} />
+      <AvatarImage
+        className="rounded-full bg-neutral-400"
+        src={fetchedUser?.profileImage}
+      />
       <AvatarFallback>
         <Image
           fill

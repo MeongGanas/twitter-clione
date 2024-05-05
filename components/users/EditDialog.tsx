@@ -1,5 +1,6 @@
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -40,7 +41,6 @@ export default function EditDialog() {
     setLoading(true);
     try {
       await axios.patch("/api/edit", {
-        id: currentUser.id,
         name,
         bio,
         username,
@@ -67,7 +67,7 @@ export default function EditDialog() {
           <DialogTitle className="text-white text-2xl">
             Edit your profile
           </DialogTitle>
-          <DialogDescription>
+          <div>
             <form className="space-y-3 text-left">
               <div className="space-y-2">
                 <Label htmlFor="name">Name</Label>
@@ -117,16 +117,18 @@ export default function EditDialog() {
                 disabled={loading}
               />
 
-              <Button
-                type="button"
-                disabled={loading}
-                className="w-full font-semibold"
-                onClick={() => onSubmit()}
-              >
-                Edit
-              </Button>
+              <DialogClose asChild>
+                <Button
+                  type="button"
+                  disabled={loading}
+                  className="w-full font-semibold"
+                  onClick={() => onSubmit()}
+                >
+                  Edit
+                </Button>
+              </DialogClose>
             </form>
-          </DialogDescription>
+          </div>
         </DialogHeader>
       </DialogContent>
     </Dialog>

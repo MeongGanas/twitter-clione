@@ -39,7 +39,11 @@ const FormSchema = z.object({
   }),
 });
 
-export default function RegisterDialog() {
+export default function RegisterDialog({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [loading, setLoading] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -74,9 +78,7 @@ export default function RegisterDialog() {
 
   return (
     <Dialog>
-      <DialogTrigger>
-        <span className="text-blue-500 cursor-pointer">register here</span>
-      </DialogTrigger>
+      <DialogTrigger>{children}</DialogTrigger>
       <DialogContent className="bg-black">
         <DialogHeader className="space-y-5">
           <DialogTitle className="text-white text-2xl">

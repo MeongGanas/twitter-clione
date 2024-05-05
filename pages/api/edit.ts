@@ -11,7 +11,11 @@ export default async function handler(
   }
 
   try {
-    const { id, name, username, bio, profileImage, coverImage } = req.body;
+    const { name, username, bio, profileImage, coverImage } = req.body;
+
+    // delete body karena kalau ada isi dari body, serverAuthnya return null
+    delete req.body;
+    const { currentUser } = await serverAuth(req);
 
     if (!name || !username) {
       throw new Error("Missing fields.");
@@ -19,7 +23,7 @@ export default async function handler(
 
     const updatedUser = await db.user.update({
       where: {
-        id,
+        id: currentUser.id,
       },
       data: {
         name,

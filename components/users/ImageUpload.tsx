@@ -45,6 +45,7 @@ export default function ImageUpload({
         name={label}
         id={label}
         accept="image/*"
+        size={1}
         onChange={(e) => handleDrop(e.target.files)}
       />
     </div>
