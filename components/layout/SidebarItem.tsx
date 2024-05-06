@@ -1,8 +1,8 @@
-"use client";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { useRouter } from "next/navigation";
 import { IconType } from "react-icons";
 import LoginDialog from "./LoginDialog";
+import { BsDot } from "react-icons/bs";
 
 interface SidebarItemProps {
   label: string;
@@ -10,6 +10,7 @@ interface SidebarItemProps {
   icon: IconType;
   onClick?: () => void;
   auth?: boolean;
+  alert?: boolean;
 }
 
 export default function SidebarItem({
@@ -18,6 +19,7 @@ export default function SidebarItem({
   icon: Icon,
   onClick,
   auth,
+  alert,
 }: SidebarItemProps) {
   const router = useRouter();
 
@@ -61,6 +63,12 @@ export default function SidebarItem({
             onClick={handleClick}
           >
             <Icon size={18} color="white" />
+            {alert ? (
+              <BsDot
+                className="text-sky-500 absolute -top-4 left-4"
+                size={50}
+              />
+            ) : null}
           </div>
           <div
             className="relative hidden lg:flex gap-4 p-4 rounded-full hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer items-center w-full transition"
@@ -68,6 +76,12 @@ export default function SidebarItem({
           >
             <Icon size={18} color="white" />
             <p className="hidden lg:block text-white">{label}</p>
+            {alert ? (
+              <BsDot
+                className="text-sky-500 absolute -top-4 left-1"
+                size={60}
+              />
+            ) : null}
           </div>
         </div>
       )}

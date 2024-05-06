@@ -29,6 +29,20 @@ export default async function handler(
 
     if (req.method === "POST") {
       updatedLikedIds.push(currentUser.id);
+
+      await db.notifications.create({
+        data: {
+          body: "Someone liked your tweet!",
+          userId: post.userId,
+        },
+      });
+
+      await db.user.update({
+        where: { id: post.userId },
+        data: {
+          hasNotification: true,
+        },
+      });
     }
 
     if (req.method === "DELETE") {

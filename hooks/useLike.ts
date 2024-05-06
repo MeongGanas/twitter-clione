@@ -12,7 +12,7 @@ export default function useLike({
   userId?: string;
   postId: string;
 }) {
-  const { data: currentUser } = useCurrentUser();
+  const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
   const { data: fetchedPost, mutate: mutateFetchedPost } = usePost(postId);
   const { mutate: mutateFetchedPosts } = usePosts(userId);
 
@@ -35,6 +35,7 @@ export default function useLike({
       await request();
       mutateFetchedPost();
       mutateFetchedPosts();
+      mutateCurrentUser();
 
       if (hasLiked) {
         toast.success("Unliked");
@@ -44,7 +45,14 @@ export default function useLike({
     } catch (err) {
       toast.error("Something went wrong.");
     }
-  }, [currentUser, postId, hasLiked, mutateFetchedPost, mutateFetchedPosts]);
+  }, [
+    currentUser,
+    postId,
+    hasLiked,
+    mutateFetchedPost,
+    mutateFetchedPosts,
+    mutateCurrentUser,
+  ]);
 
   return {
     hasLiked,

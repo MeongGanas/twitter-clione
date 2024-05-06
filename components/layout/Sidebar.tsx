@@ -11,6 +11,8 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 export default function Sidebar() {
   const { data: user } = useCurrentUser();
 
+  console.log(user);
+
   const items = [
     {
       label: "Home",
@@ -22,6 +24,7 @@ export default function Sidebar() {
       href: "/notifications",
       icon: BsBellFill,
       auth: true,
+      alert: user?.hasNotification,
     },
     {
       label: "Profile",
@@ -43,6 +46,7 @@ export default function Sidebar() {
               label={item.label}
               icon={item.icon}
               auth={item.auth}
+              alert={item.alert}
             />
           ))}
 
