@@ -21,11 +21,13 @@ export default function Sidebar() {
       label: "Notifications",
       href: "/notifications",
       icon: BsBellFill,
+      auth: true,
     },
     {
       label: "Profile",
       href: user ? `/users/${user.id}` : "",
       icon: FaUser,
+      auth: true,
     },
   ];
 
@@ -40,6 +42,7 @@ export default function Sidebar() {
               href={item.href}
               label={item.label}
               icon={item.icon}
+              auth={item.auth}
             />
           ))}
 
