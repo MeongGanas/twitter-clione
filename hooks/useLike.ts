@@ -19,7 +19,7 @@ export default function useLike({
   const hasLiked = useMemo(() => {
     const list = fetchedPost?.likedIds || [];
 
-    return list.includes(currentUser.id);
+    return list.includes(currentUser?.id);
   }, [currentUser, fetchedPost?.likedIds]);
 
   const toggleLike = useCallback(async () => {

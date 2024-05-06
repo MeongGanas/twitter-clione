@@ -14,7 +14,7 @@ interface PostItemProps {
 export default function PostItem({ data, userId }: PostItemProps) {
   const { data: currentUser } = useCurrentUser();
 
-  const { hasLiked, toggleLike } = useLike({ postId: data.id, userId });
+  const { hasLiked, toggleLike } = useLike({ postId: data?.id, userId });
 
   const router = useRouter();
 
@@ -24,12 +24,12 @@ export default function PostItem({ data, userId }: PostItemProps) {
 
       router.push(`/users/${data.user.id}`);
     },
-    [router, data.user.id]
+    [router, data?.user?.id]
   );
 
   const goToPost = useCallback(() => {
     router.push(`/posts/${data.id}`);
-  }, [router, data.id]);
+  }, [router, data?.id]);
 
   const createdAt = useMemo(() => {
     if (!data?.createdAt) {
@@ -54,28 +54,28 @@ export default function PostItem({ data, userId }: PostItemProps) {
       onClick={goToPost}
     >
       <div className="flex flex-row items-start gap-3">
-        <UserAvatar userId={data.user.id} />
+        <UserAvatar userId={data?.user?.id} />
         <div>
           <div className="flex flex-row items-center gap-2">
             <p
               className="text-white font-semibold cursor-pointer hover:underline"
               onClick={goToUser}
             >
-              {data.user.name}
+              {data?.user?.name}
             </p>
             <span
               className="text-neutral-500 cursor-pointer hover:underline hidden md:block"
               onClick={goToUser}
             >
-              @{data.user.username}
+              @{data?.user?.username}
             </span>
             <span className="text-neutral-500 text-sm">{createdAt}</span>
           </div>
-          <div className="text-white mt-1">{data.body}</div>
+          <div className="text-white mt-1">{data?.body}</div>
           <div className="flex flex-row items-center mt-3 gap-10">
             <div className="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-sky-500">
               <AiOutlineMessage size={18} />
-              <p>{data.comments?.length || 0}</p>
+              <p>{data?.comments?.length || 0}</p>
             </div>
 
             {!currentUser ? (
@@ -83,7 +83,7 @@ export default function PostItem({ data, userId }: PostItemProps) {
                 <LoginDialog>
                   <div className="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500">
                     <AiOutlineHeart size={18} />
-                    <p>{data.likedIds.length}</p>
+                    <p>{data?.likedIds?.length}</p>
                   </div>
                 </LoginDialog>
               </div>
@@ -99,7 +99,7 @@ export default function PostItem({ data, userId }: PostItemProps) {
                 ) : (
                   <AiOutlineHeart size={18} />
                 )}
-                <p>{data.likedIds.length}</p>
+                <p>{data?.likedIds?.length}</p>
               </div>
             )}
           </div>

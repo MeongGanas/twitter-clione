@@ -35,8 +35,6 @@ export default async function handler(
       updatedLikedIds = updatedLikedIds.filter((id) => id !== currentUser.id);
     }
 
-    console.log(updatedLikedIds);
-
     const updatedPost = await db.post.update({
       where: { id: postId },
       data: {

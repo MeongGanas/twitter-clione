@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="container h-full">
         <div className="grid grid-cols-4 h-full">
           <Sidebar />
-          <div className="col-span-3 lg:col-span-2 border-x-[1px] border-neutral-800">
+          <div className="min-h-screen col-span-3 lg:col-span-2 border-x-[1px] border-neutral-800">
             {children}
           </div>
           <FollowBar />

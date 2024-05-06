@@ -8,6 +8,7 @@ import RegisterDialog from "../layout/RegisterDialog";
 import UserAvatar from "../UserAvatar";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import usePost from "@/hooks/usePost";
 
 interface PostFormProps {
   placeholder: string;
@@ -22,6 +23,7 @@ export default function Form({
 }: PostFormProps) {
   const { data: currentUser } = useCurrentUser();
   const { mutate: mutatePosts } = usePosts(postId as string);
+  const { mutate: mutatePost } = usePost(postId as string);
 
   const [body, setBody] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,9 +31,15 @@ export default function Form({
   const onSubmit = useCallback(async () => {
     try {
       setLoading(true);
-      await axios.post("/api/posts", { body });
-      toast.success("Tweet Created.");
+
+      const url = isComment ? `/api/comment?postId=${postId}` : "/api/posts";
+
+      await axios.post(url, { body });
+
+      const mssg = isComment ? "Comment Success." : "Success Create Tweet";
+      toast.success(mssg);
       setBody("");
+      mutatePost();
       mutatePosts();
     } catch (err) {
       toast.error("Something went wrong.");

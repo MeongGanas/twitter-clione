@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Comments from "@/components/posts/Comments";
 import Form from "@/components/posts/Form";
 import PostItem from "@/components/posts/PostItem";
 import usePost from "@/hooks/usePost";
@@ -28,6 +29,7 @@ export default function PostView() {
         placeholder="Tweet your reply"
         isComment
       />
+      <Comments data={fetchedPost} />
     </div>
   );
 }
