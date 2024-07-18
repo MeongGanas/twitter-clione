@@ -9,7 +9,7 @@ export default function FollowBar() {
   }
 
   return (
-    <div className="h-screen hidden lg:block">
+    <div className="h-screen hidden lg:block lg:col-span-1">
       <div className="px-6 py-4 sticky top-0">
         <div className="bg-neutral-800 rounded-xl p-4">
           <h2 className="text-white font-semibold">Who to follow</h2>

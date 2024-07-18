@@ -11,8 +11,6 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 export default function Sidebar() {
   const { data: user } = useCurrentUser();
 
-  console.log(user);
-
   const items = [
     {
       label: "Home",
@@ -35,7 +33,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="col-span-1 h-full px-4 md:px-6">
+    <div className="col-span-1 h-full md:px-6">
       <div className="flex flex-col items-end sticky top-0">
         <div className="space-y-2 w-full">
           <SidebarLogo />

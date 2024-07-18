@@ -48,9 +48,17 @@ export default async function handler(
             user: true,
             comments: true,
           },
-          orderBy: {
-            createdAt: "desc",
-          },
+          orderBy: [
+            {
+              createdAt: "desc",
+            },
+            {
+              comments: { _count: "desc" },
+            },
+            {
+              likedIds: "desc",
+            },
+          ],
         });
       }
 
