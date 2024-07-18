@@ -50,6 +50,7 @@ export default function LoginDialog({
 
   const onSubmit = useCallback((data: z.infer<typeof FormSchema>) => {
     setLoading(true);
+    console.log("ok");
     try {
       signIn("credentials", {
         email: data.email,

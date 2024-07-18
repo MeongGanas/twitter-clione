@@ -21,6 +21,7 @@ export default NextAuth({
         password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
+        console.log("Authorize function called");
         if (!credentials?.email || !credentials.password) {
           throw new Error("Invalid Credentials");
         }
