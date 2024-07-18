@@ -6,10 +6,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { BiLogIn } from "react-icons/bi";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import SidebarItem from "./SidebarItem";
 import RegisterDialog from "./RegisterDialog";
 import {
   Form,

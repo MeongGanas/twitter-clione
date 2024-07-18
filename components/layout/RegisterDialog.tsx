@@ -24,7 +24,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useCallback, useState } from "react";
 import { signIn } from "next-auth/react";
-import { User } from "@prisma/client";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
